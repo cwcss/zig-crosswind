@@ -1,6 +1,6 @@
-# Headwind Build System
+# crosswind Build System
 
-This document describes the comprehensive build system for Headwind, including cross-compilation, release optimizations, and distribution builds.
+This document describes the comprehensive build system for crosswind, including cross-compilation, release optimizations, and distribution builds.
 
 ## Quick Start
 
@@ -108,18 +108,18 @@ All release and cross-compilation builds automatically strip debug symbols to re
 ```
 zig-out/
 ├── bin/                    # Default build output
-│   └── headwind           # Main executable
+│   └── crosswind           # Main executable
 └── dist/                  # Cross-compilation output
     ├── linux-x86_64/
-    │   └── headwind       # Linux x86_64 binary (static)
+    │   └── crosswind       # Linux x86_64 binary (static)
     ├── linux-aarch64/
-    │   └── headwind       # Linux ARM64 binary (static)
+    │   └── crosswind       # Linux ARM64 binary (static)
     ├── macos-x86_64/
-    │   └── headwind       # macOS Intel binary
+    │   └── crosswind       # macOS Intel binary
     ├── macos-arm64/
-    │   └── headwind       # macOS Apple Silicon binary
+    │   └── crosswind       # macOS Apple Silicon binary
     └── windows-x86_64/
-        └── headwind.exe   # Windows binary (static)
+        └── crosswind.exe   # Windows binary (static)
 ```
 
 ### Binary Sizes
@@ -180,7 +180,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: headwind-binaries
+          name: crosswind-binaries
           path: zig-out/dist/
 ```
 

@@ -1,7 +1,7 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
-const class_parser = headwind.class_parser;
+const crosswind = @import("crosswind");
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Basic Parsing Tests
@@ -11,7 +11,10 @@ test "parse simple utility class" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "bg-blue-500");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 0), parsed.variants.len);
     try testing.expectEqualStrings("bg-blue-500", parsed.utility);
@@ -24,7 +27,10 @@ test "parse utility with single variant" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "hover:bg-red-500");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
     try testing.expectEqualStrings("hover", parsed.variants[0].variant);
@@ -36,7 +42,10 @@ test "parse utility with multiple variants" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "md:hover:focus:text-white");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 3), parsed.variants.len);
     try testing.expectEqualStrings("md", parsed.variants[0].variant);
@@ -57,7 +66,10 @@ test "parse compound utility with hyphens" {
 
     for (test_cases) |class_name| {
         const parsed = try class_parser.parseClass(allocator, class_name);
-        defer { var mutable = parsed; mutable.deinit(allocator); }
+        defer {
+            var mutable = parsed;
+            mutable.deinit(allocator);
+        }
 
         try testing.expectEqualStrings(class_name, parsed.utility);
         try testing.expectEqual(@as(usize, 0), parsed.variants.len);
@@ -72,7 +84,10 @@ test "parse arbitrary value with brackets" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "w-[100px]");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_arbitrary);
     try testing.expectEqualStrings("100px", parsed.arbitrary_value.?);
@@ -83,7 +98,10 @@ test "parse arbitrary value with spaces (underscores)" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "bg-[rgb(255,_0,_0)]");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_arbitrary);
     // Underscores should be converted to spaces
@@ -95,7 +113,10 @@ test "parse arbitrary value with complex expression" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "grid-cols-[1fr_2fr_1fr]");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_arbitrary);
     try testing.expect(std.mem.startsWith(u8, parsed.utility, "grid-cols-"));
@@ -105,7 +126,10 @@ test "parse arbitrary value with nested brackets" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "content-['hello_[world]']");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_arbitrary);
     // Should handle nested brackets correctly
@@ -115,7 +139,10 @@ test "parse arbitrary selector" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "[&:nth-child(3)]:bg-red");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     // First variant should contain the arbitrary selector
     try testing.expect(parsed.variants.len > 0);
@@ -130,7 +157,10 @@ test "parse class with important modifier" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "bg-blue-500!");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_important);
     try testing.expectEqualStrings("bg-blue-500", parsed.utility);
@@ -140,7 +170,10 @@ test "parse variant with important modifier" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "hover:bg-red!");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_important);
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
@@ -151,7 +184,10 @@ test "parse arbitrary value with important modifier" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "w-[100px]!");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_important);
     try testing.expect(parsed.is_arbitrary);
@@ -161,7 +197,10 @@ test "important modifier at start of class" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "!bg-blue-500");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_important);
     try testing.expectEqualStrings("bg-blue-500", parsed.utility);
@@ -175,7 +214,10 @@ test "parse group variant" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "group-hover:bg-blue");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
     try testing.expectEqualStrings("group-hover", parsed.variants[0].variant);
@@ -185,7 +227,10 @@ test "parse named group variant" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "group/sidebar-hover:bg-gray");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
     // Should parse group name
@@ -200,7 +245,10 @@ test "parse peer variant" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "peer-checked:text-red");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
     try testing.expectEqualStrings("peer-checked", parsed.variants[0].variant);
@@ -210,7 +258,10 @@ test "parse named peer variant" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "peer/label-focus:font-bold");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expectEqual(@as(usize, 1), parsed.variants.len);
     // Should parse peer name
@@ -237,7 +288,10 @@ test "parse negative spacing" {
 
     for (test_cases) |class_name| {
         const parsed = try class_parser.parseClass(allocator, class_name);
-        defer { var mutable = parsed; mutable.deinit(allocator); }
+        defer {
+            var mutable = parsed;
+            mutable.deinit(allocator);
+        }
 
         // Should start with dash
         try testing.expect(parsed.utility[0] == '-');
@@ -248,7 +302,10 @@ test "parse negative arbitrary value" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "-translate-x-[50px]");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.utility[0] == '-');
     try testing.expect(parsed.is_arbitrary);
@@ -287,7 +344,10 @@ test "parse very long class name" {
     try long_class.appendSlice(allocator, "utility-class");
 
     const parsed = try class_parser.parseClass(allocator, long_class.items);
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     // Should parse successfully
     try testing.expect(parsed.variants.len > 0);
@@ -304,7 +364,10 @@ test "parse class with special characters in arbitrary value" {
 
     for (test_cases) |class_name| {
         const parsed = try class_parser.parseClass(allocator, class_name);
-        defer { var mutable = parsed; mutable.deinit(allocator); }
+        defer {
+            var mutable = parsed;
+            mutable.deinit(allocator);
+        }
 
         // Should parse without error
         try testing.expect(parsed.is_arbitrary or parsed.variants.len > 0);
@@ -315,16 +378,19 @@ test "parse malformed brackets recovers gracefully" {
     const allocator = testing.allocator;
 
     const test_cases = [_][]const u8{
-        "w-[100px",      // Missing closing bracket
-        "w-100px]",      // Missing opening bracket
-        "w-[[100px]]",   // Double brackets
+        "w-[100px", // Missing closing bracket
+        "w-100px]", // Missing opening bracket
+        "w-[[100px]]", // Double brackets
     };
 
     for (test_cases) |class_name| {
         // Should either parse or return error, not crash
         const result = class_parser.parseClass(allocator, class_name);
         if (result) |parsed| {
-            defer { var mutable = parsed; mutable.deinit(allocator); }
+            defer {
+                var mutable = parsed;
+                mutable.deinit(allocator);
+            }
         } else |_| {
             // Error is acceptable for malformed input
         }
@@ -336,7 +402,10 @@ test "parse class with only variants no utility fails gracefully" {
 
     const result = class_parser.parseClass(allocator, "hover:focus:");
     if (result) |parsed| {
-        defer { var mutable = parsed; mutable.deinit(allocator); }
+        defer {
+            var mutable = parsed;
+            mutable.deinit(allocator);
+        }
         // If it parses, utility should be empty or last variant
         try testing.expect(parsed.utility.len > 0);
     } else |_| {
@@ -348,7 +417,10 @@ test "parse duplicate variants" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "hover:hover:bg-blue");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     // Should parse but may have duplicate variants
     try testing.expect(parsed.variants.len >= 1);
@@ -358,7 +430,10 @@ test "parse with colon in arbitrary value" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "before:content-['12:00']");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     // Colon inside brackets should not be treated as variant separator
     try testing.expect(parsed.is_arbitrary or parsed.variants.len > 0);
@@ -377,7 +452,10 @@ test "parse complex real-world classes" {
 
     for (test_cases) |class_name| {
         const parsed = try class_parser.parseClass(allocator, class_name);
-        defer { var mutable = parsed; mutable.deinit(allocator); }
+        defer {
+            var mutable = parsed;
+            mutable.deinit(allocator);
+        }
 
         // Should parse successfully
         try testing.expect(parsed.utility.len > 0);
@@ -419,7 +497,10 @@ test "parse class with unicode in arbitrary value" {
     const allocator = testing.allocator;
 
     const parsed = try class_parser.parseClass(allocator, "content-['Hello_世界']");
-    defer { var mutable = parsed; mutable.deinit(allocator); }
+    defer {
+        var mutable = parsed;
+        mutable.deinit(allocator);
+    }
 
     try testing.expect(parsed.is_arbitrary);
     // Should handle unicode correctly

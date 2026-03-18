@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const grid = headwind.grid;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const grid = crosswind.grid;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Grid Template Columns Tests
@@ -120,7 +120,7 @@ test "grid column span" {
     const allocator = testing.allocator;
 
     const spans = [_][]const u8{
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+        "1",    "2",    "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
         "auto", "full",
     };
 

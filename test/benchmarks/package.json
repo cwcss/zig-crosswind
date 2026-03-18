@@ -1,7 +1,7 @@
 {
-  "name": "zig-headwind-benchmarks",
+  "name": "zig-crosswind-benchmarks",
   "version": "1.0.0",
-  "description": "Performance benchmarks for zig-headwind vs competing tools",
+  "description": "Performance benchmarks for zig-crosswind vs competing tools",
   "type": "module",
   "scripts": {
     "bench": "bun run benchmarks/suite.ts",

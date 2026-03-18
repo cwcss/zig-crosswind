@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const filters = headwind.filters;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const filters = crosswind.filters;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Blur Tests

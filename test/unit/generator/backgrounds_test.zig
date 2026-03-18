@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const backgrounds = headwind.backgrounds;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const backgrounds = crosswind.backgrounds;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Background Color Tests

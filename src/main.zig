@@ -1,5 +1,5 @@
 const std = @import("std");
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 const commands = @import("cli/commands.zig");
 
 pub fn main() !void {

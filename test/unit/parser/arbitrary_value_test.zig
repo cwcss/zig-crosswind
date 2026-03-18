@@ -1,8 +1,8 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const class_parser = headwind.class_parser;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Arbitrary Value Parsing Tests

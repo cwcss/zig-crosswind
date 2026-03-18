@@ -1,9 +1,9 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-// Import the colors module through headwind
-const colors = headwind.colors;
+// Import the colors module through crosswind
+const colors = crosswind.colors;
 
 // ============================================================================
 // OKLCH Color Resolution Tests
@@ -37,14 +37,14 @@ test "resolve standard color with shade" {
 
 test "resolve all color families" {
     const color_families = [_][]const u8{
-        "red",    "orange", "amber",  "yellow", "lime",   "green",
-        "emerald", "teal",   "cyan",   "sky",    "blue",   "indigo",
-        "violet",  "purple", "fuchsia", "pink",   "rose",   "slate",
+        "red",     "orange", "amber",   "yellow", "lime", "green",
+        "emerald", "teal",   "cyan",    "sky",    "blue", "indigo",
+        "violet",  "purple", "fuchsia", "pink",   "rose", "slate",
         "gray",    "zinc",   "neutral", "stone",
     };
 
     const shades = [_][]const u8{
-        "50", "100", "200", "300", "400", "500",
+        "50",  "100", "200", "300", "400", "500",
         "600", "700", "800", "900", "950",
     };
 
@@ -173,7 +173,7 @@ test "parseColorShade with valid input" {
 
 test "parseColorShade with all shades" {
     const shades = [_][]const u8{
-        "50", "100", "200", "300", "400", "500",
+        "50",  "100", "200", "300", "400", "500",
         "600", "700", "800", "900", "950",
     };
 
@@ -239,14 +239,15 @@ test "parseColorShade with invalid format" {
 test "all Tailwind v4 colors are available" {
     // Test that all standard Tailwind colors with all shades are available
     const colors_with_all_shades = [_][]const u8{
-        "slate", "gray", "zinc", "neutral", "stone",
-        "red", "orange", "amber", "yellow", "lime", "green",
-        "emerald", "teal", "cyan", "sky", "blue", "indigo",
-        "violet", "purple", "fuchsia", "pink", "rose",
+        "slate", "gray",    "zinc",   "neutral", "stone",
+        "red",   "orange",  "amber",  "yellow",  "lime",
+        "green", "emerald", "teal",   "cyan",    "sky",
+        "blue",  "indigo",  "violet", "purple",  "fuchsia",
+        "pink",  "rose",
     };
 
     const standard_shades = [_][]const u8{
-        "50", "100", "200", "300", "400", "500",
+        "50",  "100", "200", "300", "400", "500",
         "600", "700", "800", "900", "950",
     };
 
@@ -328,11 +329,11 @@ test "backwards compatibility - colors.colors.has() exists" {
 
 test "backwards compatibility - common colors are supported" {
     const common_colors = [_][]const u8{
-        "red", "orange", "amber", "yellow", "lime", "green",
-        "emerald", "teal", "cyan", "sky", "blue", "indigo",
-        "violet", "purple", "fuchsia", "pink", "rose",
-        "slate", "gray", "zinc", "neutral", "stone",
-        "inherit", "current", "transparent", "black", "white",
+        "red",         "orange", "amber",   "yellow", "lime",    "green",
+        "emerald",     "teal",   "cyan",    "sky",    "blue",    "indigo",
+        "violet",      "purple", "fuchsia", "pink",   "rose",    "slate",
+        "gray",        "zinc",   "neutral", "stone",  "inherit", "current",
+        "transparent", "black",  "white",
     };
 
     for (common_colors) |color| {

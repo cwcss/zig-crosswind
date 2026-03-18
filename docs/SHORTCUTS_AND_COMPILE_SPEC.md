@@ -222,7 +222,7 @@ pub const CompileClassConfig = struct {
     hashAlgorithm: []const u8 = "murmur3",
 };
 
-pub const HeadwindConfig = struct {
+pub const crosswindConfig = struct {
     // ... existing config ...
 
     shortcuts: ?ShortcutConfig = null,
@@ -359,7 +359,7 @@ pub const ClassScanner = struct {
 
 ### Basic Shortcuts
 
-**headwind.json:**
+**crosswind.json:**
 ```json
 {
   "shortcuts": {
@@ -374,7 +374,7 @@ pub const ClassScanner = struct {
 
 ### Advanced Shortcuts with Patterns
 
-**headwind.json:**
+**crosswind.json:**
 ```json
 {
   "shortcuts": [
@@ -399,7 +399,7 @@ pub const ClassScanner = struct {
 
 ### Compile Class Configuration
 
-**headwind.json:**
+**crosswind.json:**
 ```json
 {
   "compileClass": {
@@ -506,13 +506,13 @@ test "compile class hash generation" {
 
 ```bash
 # Generate CSS with shortcuts
-headwind build -i input.html -o output.css --config headwind.json
+crosswind build -i input.html -o output.css --config crosswind.json
 
 # Enable compile class transformation
-headwind build -i input.html -o output.css --compile-classes
+crosswind build -i input.html -o output.css --compile-classes
 
 # Generate with both features
-headwind build -i input.html -o output.css --shortcuts --compile-classes
+crosswind build -i input.html -o output.css --shortcuts --compile-classes
 ```
 
 ## Documentation Examples
@@ -520,7 +520,7 @@ headwind build -i input.html -o output.css --shortcuts --compile-classes
 ### Quick Start
 
 ```html
-<!-- Define shortcuts in headwind.json -->
+<!-- Define shortcuts in crosswind.json -->
 {
   "shortcuts": {
     "btn": "px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"

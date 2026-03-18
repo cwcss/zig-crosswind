@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const transforms = headwind.transforms;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const transforms = crosswind.transforms;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Scale Tests
@@ -205,8 +205,8 @@ test "transform origin values" {
     const allocator = testing.allocator;
 
     const origins = [_][]const u8{
-        "center",       "top",          "top-right",    "right",
-        "bottom-right", "bottom",       "bottom-left",  "left",
+        "center",       "top",    "top-right",   "right",
+        "bottom-right", "bottom", "bottom-left", "left",
         "top-left",
     };
 

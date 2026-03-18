@@ -1,11 +1,11 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const transitions = headwind.transitions;
-const animations = headwind.animations;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const transitions = crosswind.transitions;
+const animations = crosswind.animations;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Transition Property Tests

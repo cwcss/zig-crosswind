@@ -1,9 +1,9 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const class_parser = headwind.class_parser;
-const CSSGenerator = headwind.CSSGenerator;
+const class_parser = crosswind.class_parser;
+const CSSGenerator = crosswind.CSSGenerator;
 
 // ============================================================================
 // Integration Tests: Parser + Generator
@@ -19,7 +19,7 @@ test "parse and generate simple utility" {
     defer generator.deinit();
 
     // Generate CSS from parsed class
-    try headwind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
+    try crosswind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
 
     const css = try generator.generate();
     defer allocator.free(css);
@@ -40,7 +40,7 @@ test "parse and generate with variant" {
     var generator = CSSGenerator.init(allocator);
     defer generator.deinit();
 
-    try headwind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
+    try crosswind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
 
     const css = try generator.generate();
     defer allocator.free(css);
@@ -60,7 +60,7 @@ test "parse and generate with multiple variants" {
     var generator = CSSGenerator.init(allocator);
     defer generator.deinit();
 
-    try headwind.typography.generateTextColor(&generator, &parsed, "white");
+    try crosswind.typography.generateTextColor(&generator, &parsed, "white");
 
     const css = try generator.generate();
     defer allocator.free(css);
@@ -79,7 +79,7 @@ test "parse and generate with important modifier" {
     var generator = CSSGenerator.init(allocator);
     defer generator.deinit();
 
-    try headwind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
+    try crosswind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
 
     const css = try generator.generate();
     defer allocator.free(css);
@@ -99,7 +99,7 @@ test "parse and generate arbitrary value" {
     var generator = CSSGenerator.init(allocator);
     defer generator.deinit();
 
-    try headwind.sizing.generateWidth(&generator, &parsed, "200px");
+    try crosswind.sizing.generateWidth(&generator, &parsed, "200px");
 
     const css = try generator.generate();
     defer allocator.free(css);
@@ -147,7 +147,7 @@ test "deduplication of identical rules" {
         var parsed = try class_parser.parseClass(allocator, "bg-blue-500");
         defer parsed.deinit(allocator);
 
-        try headwind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
+        try crosswind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
     }
 
     const css = try generator.generate();
@@ -246,9 +246,9 @@ test "parse malformed brackets" {
     const allocator = testing.allocator;
 
     const malformed = [_][]const u8{
-        "w-[100px",     // unclosed
-        "w-100px]",     // unopened
-        "w-[[100px]]",  // double opening
+        "w-[100px", // unclosed
+        "w-100px]", // unopened
+        "w-[[100px]]", // double opening
     };
 
     for (malformed) |class| {

@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const borders = headwind.borders;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const borders = crosswind.borders;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Border Width Tests

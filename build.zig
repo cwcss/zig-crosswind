@@ -13,16 +13,16 @@ pub fn build(b: *std.Build) void {
     });
 
     // Library module
-    const headwind_lib = b.addModule("headwind", .{
-        .root_source_file = b.path("src/headwind.zig"),
+    const crosswind_lib = b.addModule("crosswind", .{
+        .root_source_file = b.path("src/crosswind.zig"),
     });
 
     // Add zig-config as a dependency
-    headwind_lib.addImport("zig-config", zig_config_mod);
+    crosswind_lib.addImport("zig-config", zig_config_mod);
 
     // Executable (CLI)
     const exe = b.addExecutable(.{
-        .name = "headwind",
+        .name = "crosswind",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = target,
@@ -30,7 +30,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    exe.root_module.addImport("headwind", headwind_lib);
+    exe.root_module.addImport("crosswind", crosswind_lib);
     exe.root_module.addImport("zig-config", zig_config_mod);
 
     b.installArtifact(exe);
@@ -49,7 +49,7 @@ pub fn build(b: *std.Build) void {
     // Tests
     const lib_tests = b.addTest(.{
         .root_module = b.createModule(.{
-            .root_source_file = b.path("src/headwind.zig"),
+            .root_source_file = b.path("src/crosswind.zig"),
             .target = target,
             .optimize = optimize,
         }),
@@ -69,7 +69,7 @@ pub fn build(b: *std.Build) void {
     });
 
     comprehensive_tests.root_module.addImport("zig-config", zig_config_mod);
-    comprehensive_tests.root_module.addImport("headwind", headwind_lib);
+    comprehensive_tests.root_module.addImport("crosswind", crosswind_lib);
 
     const run_comprehensive_tests = b.addRunArtifact(comprehensive_tests);
 
@@ -87,7 +87,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    bench.root_module.addImport("headwind", headwind_lib);
+    bench.root_module.addImport("crosswind", crosswind_lib);
 
     const run_bench = b.addRunArtifact(bench);
     const bench_step = b.step("bench", "Run benchmarks");
@@ -123,7 +123,7 @@ pub fn build(b: *std.Build) void {
         const platform_step = b.step("build-" ++ cross_target.name, "Build for " ++ cross_target.name);
 
         const cross_exe = b.addExecutable(.{
-            .name = "headwind",
+            .name = "crosswind",
             .root_module = b.createModule(.{
                 .root_source_file = b.path("src/main.zig"),
                 .target = b.resolveTargetQuery(cross_target.query),
@@ -131,7 +131,7 @@ pub fn build(b: *std.Build) void {
             }),
         });
 
-        cross_exe.root_module.addImport("headwind", headwind_lib);
+        cross_exe.root_module.addImport("crosswind", crosswind_lib);
         cross_exe.root_module.addImport("zig-config", zig_config_mod);
 
         // Static linking only for Linux and Windows (macOS doesn't support static libc)
@@ -159,7 +159,7 @@ pub fn build(b: *std.Build) void {
 
     inline for (cross_targets) |cross_target| {
         const cross_exe = b.addExecutable(.{
-            .name = "headwind",
+            .name = "crosswind",
             .root_module = b.createModule(.{
                 .root_source_file = b.path("src/main.zig"),
                 .target = b.resolveTargetQuery(cross_target.query),
@@ -167,7 +167,7 @@ pub fn build(b: *std.Build) void {
             }),
         });
 
-        cross_exe.root_module.addImport("headwind", headwind_lib);
+        cross_exe.root_module.addImport("crosswind", crosswind_lib);
         cross_exe.root_module.addImport("zig-config", zig_config_mod);
 
         // Static linking only for Linux and Windows
@@ -195,7 +195,7 @@ pub fn build(b: *std.Build) void {
     // Release build with all optimizations
     const release_step = b.step("release", "Build optimized release binary for current platform");
     const release_exe = b.addExecutable(.{
-        .name = "headwind",
+        .name = "crosswind",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = target,
@@ -203,7 +203,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    release_exe.root_module.addImport("headwind", headwind_lib);
+    release_exe.root_module.addImport("crosswind", crosswind_lib);
     release_exe.root_module.addImport("zig-config", zig_config_mod);
     release_exe.root_module.strip = true;
 
@@ -213,7 +213,7 @@ pub fn build(b: *std.Build) void {
     // Small size optimized build
     const release_small_step = b.step("release-small", "Build size-optimized release binary");
     const release_small_exe = b.addExecutable(.{
-        .name = "headwind",
+        .name = "crosswind",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = target,
@@ -221,7 +221,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    release_small_exe.root_module.addImport("headwind", headwind_lib);
+    release_small_exe.root_module.addImport("crosswind", crosswind_lib);
     release_small_exe.root_module.addImport("zig-config", zig_config_mod);
     release_small_exe.root_module.strip = true;
 

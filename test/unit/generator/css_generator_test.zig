@@ -1,9 +1,9 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
-const CSSGenerator = headwind.CSSGenerator;
-const CSSRule = headwind.CSSRule;
-const class_parser = headwind.class_parser;
+const crosswind = @import("crosswind");
+const CSSGenerator = crosswind.CSSGenerator;
+const CSSRule = crosswind.CSSRule;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Basic Generator Tests

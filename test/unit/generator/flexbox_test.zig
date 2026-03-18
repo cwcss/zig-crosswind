@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const flexbox = headwind.flexbox;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const flexbox = crosswind.flexbox;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Flex Direction Tests
@@ -156,8 +156,8 @@ test "justify content values" {
     const allocator = testing.allocator;
 
     const justifies = [_][]const u8{
-        "start",   "end",    "center",  "between",
-        "around",  "evenly", "stretch",
+        "start",  "end",    "center",  "between",
+        "around", "evenly", "stretch",
     };
 
     for (justifies) |justify| {
@@ -302,7 +302,7 @@ test "order values" {
     const allocator = testing.allocator;
 
     const orders = [_][]const u8{
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+        "1",     "2",    "3",    "4", "5", "6", "7", "8", "9", "10", "11", "12",
         "first", "last", "none",
     };
 

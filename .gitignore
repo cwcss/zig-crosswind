@@ -27,4 +27,4 @@ coverage/
 
 # Cache
 .cache/
-/.headwind-cache
+/.crosswind-cache

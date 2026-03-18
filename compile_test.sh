@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /Users/chrisbreuer/Code/zig-headwind
+cd /Users/chrisbreuer/Code/zig-crosswind
 echo "Testing SIMD module..."
 zig test src/utils/simd.zig > /tmp/zig_simd_test.log 2>&1
 EXIT_CODE=$?

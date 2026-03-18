@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const layout = headwind.layout;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const layout = crosswind.layout;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 //============================================================================
 // Display Tests
@@ -14,10 +14,10 @@ test "display values" {
     const allocator = testing.allocator;
 
     const displays = [_][]const u8{
-        "block",        "inline-block", "inline",       "flex",
-        "inline-flex",  "table",        "inline-table", "table-caption",
-        "table-cell",   "table-column", "table-row",    "grid",
-        "inline-grid",  "contents",     "list-item",    "hidden",
+        "block",       "inline-block", "inline",       "flex",
+        "inline-flex", "table",        "inline-table", "table-caption",
+        "table-cell",  "table-column", "table-row",    "grid",
+        "inline-grid", "contents",     "list-item",    "hidden",
     };
 
     for (displays) |display| {
@@ -266,7 +266,7 @@ test "object position values" {
     const allocator = testing.allocator;
 
     const positions = [_][]const u8{
-        "bottom", "center", "left",        "left-bottom", "left-top",
+        "bottom", "center",       "left",      "left-bottom", "left-top",
         "right",  "right-bottom", "right-top", "top",
     };
 

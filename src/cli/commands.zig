@@ -1,5 +1,5 @@
 const std = @import("std");
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
 pub const Command = enum {
     init,
@@ -94,7 +94,7 @@ pub fn executeCommand(allocator: std.mem.Allocator, cmd: Command, opts: CommandO
 fn initCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
     _ = opts;
 
-    std.debug.print("Initializing Headwind project...\n", .{});
+    std.debug.print("Initializing crosswind project...\n", .{});
 
     // Create default config file
     const config_content =
@@ -107,7 +107,7 @@ fn initCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
         \\}
     ;
 
-    const file = try std.fs.cwd().createFile("headwind.config.json", .{});
+    const file = try std.fs.cwd().createFile("crosswind.config.json", .{});
     defer file.close();
 
     try file.writeAll(config_content);
@@ -125,9 +125,9 @@ fn initCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
 
     try css_file.writeAll(input_css);
 
-    std.debug.print("✓ Created headwind.config.json\n", .{});
+    std.debug.print("✓ Created crosswind.config.json\n", .{});
     std.debug.print("✓ Created src/input.css\n", .{});
-    std.debug.print("\nRun 'headwind build' to generate your CSS.\n", .{});
+    std.debug.print("\nRun 'crosswind build' to generate your CSS.\n", .{});
     _ = allocator;
 }
 
@@ -138,7 +138,7 @@ fn buildCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
 
     // Load configuration
     _ = opts.config_path; // TODO: Support custom config path
-    var config_result = headwind.loadConfigResult(allocator) catch |err| {
+    var config_result = crosswind.loadConfigResult(allocator) catch |err| {
         std.debug.print("Error loading config: {}\n", .{err});
         return err;
     };
@@ -155,8 +155,8 @@ fn buildCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
         std.debug.print("[verbose] Attributify mode: {s}\n", .{if (config_result.value.attributify.enabled) "enabled" else "disabled"});
     }
 
-    // Initialize Headwind
-    var hw = try headwind.Headwind.init(allocator, config_result.value);
+    // Initialize crosswind
+    var hw = try crosswind.crosswind.init(allocator, config_result.value);
     defer hw.deinit();
 
     // Build (includes scanning and CSS generation)
@@ -201,7 +201,7 @@ fn watchCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
 
     // Load configuration
     _ = opts.config_path; // TODO: Support custom config path
-    var config_result = headwind.loadConfigResult(allocator) catch |err| {
+    var config_result = crosswind.loadConfigResult(allocator) catch |err| {
         std.debug.print("Error loading config: {}\n", .{err});
         return err;
     };
@@ -272,7 +272,7 @@ fn checkCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
     _ = opts.config_path; // TODO: Support custom config path
     std.debug.print("Checking configuration...\n", .{});
 
-    const config = headwind.loadConfig(allocator) catch |err| {
+    const config = crosswind.loadConfig(allocator) catch |err| {
         std.debug.print("✗ Invalid configuration: {}\n", .{err});
         return err;
     };
@@ -285,7 +285,7 @@ fn cleanCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
     std.debug.print("Cleaning cache...\n", .{});
 
     // Remove cache directory
-    std.fs.cwd().deleteTree(".headwind-cache") catch |err| {
+    std.fs.cwd().deleteTree(".crosswind-cache") catch |err| {
         if (err != error.FileNotFound) {
             return err;
         }
@@ -298,11 +298,11 @@ fn cleanCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
 }
 
 fn infoCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
-    std.debug.print("Headwind CSS Framework\n", .{});
+    std.debug.print("crosswind CSS Framework\n", .{});
     std.debug.print("Version: 0.1.0\n", .{});
     std.debug.print("Zig Version: {s}\n", .{@import("builtin").zig_version_string});
 
-    const config_path = opts.config_path orelse "headwind.config.json";
+    const config_path = opts.config_path orelse "crosswind.config.json";
     const config_exists = blk: {
         std.fs.cwd().access(config_path, .{}) catch {
             break :blk false;
@@ -317,13 +317,13 @@ fn infoCommand(allocator: std.mem.Allocator, opts: CommandOptions) !void {
 
 pub fn printHelp() void {
     std.debug.print(
-        \\Headwind - A high-performance Tailwind CSS alternative
+        \\crosswind - A high-performance Tailwind CSS alternative
         \\
         \\USAGE:
-        \\    headwind <COMMAND> [OPTIONS]
+        \\    crosswind <COMMAND> [OPTIONS]
         \\
         \\COMMANDS:
-        \\    init        Initialize a new Headwind project
+        \\    init        Initialize a new crosswind project
         \\    build       Build CSS from source files
         \\    watch       Watch files and rebuild on changes
         \\    check       Validate configuration
@@ -333,7 +333,7 @@ pub fn printHelp() void {
         \\    version     Display version information
         \\
         \\OPTIONS:
-        \\    -c, --config <PATH>     Path to config file (default: headwind.config.json)
+        \\    -c, --config <PATH>     Path to config file (default: crosswind.config.json)
         \\    -i, --input <PATH>      Input CSS file
         \\    -o, --output <PATH>     Output CSS file (default: dist/output.css)
         \\    -m, --minify            Minify output CSS
@@ -344,14 +344,14 @@ pub fn printHelp() void {
         \\    -v, --version           Display version
         \\
         \\EXAMPLES:
-        \\    headwind init
-        \\    headwind build
-        \\    headwind build --minify --output dist/styles.css
-        \\    headwind watch --verbose
+        \\    crosswind init
+        \\    crosswind build
+        \\    crosswind build --minify --output dist/styles.css
+        \\    crosswind watch --verbose
         \\
     , .{});
 }
 
 fn printVersion() void {
-    std.debug.print("Headwind v0.1.0\n", .{});
+    std.debug.print("crosswind v0.1.0\n", .{});
 }

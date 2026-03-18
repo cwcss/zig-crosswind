@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const sizing = headwind.sizing;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const sizing = crosswind.sizing;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Width Tests
@@ -13,12 +13,7 @@ const class_parser = headwind.class_parser;
 test "width with spacing scale values" {
     const allocator = testing.allocator;
 
-    const widths = [_][]const u8{
-        "0",   "1",  "2",  "3",   "4",   "5",   "6",   "7",   "8",
-        "9",   "10", "11", "12",  "14",  "16",  "20",  "24",  "28",
-        "32",  "36", "40", "44",  "48",  "52",  "56",  "60",  "64",
-        "72",  "80", "96", "auto"
-    };
+    const widths = [_][]const u8{ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "14", "16", "20", "24", "28", "32", "36", "40", "44", "48", "52", "56", "60", "64", "72", "80", "96", "auto" };
 
     for (widths) |width| {
         var generator = CSSGenerator.init(allocator);
@@ -43,13 +38,7 @@ test "width with spacing scale values" {
 test "width with fractional values" {
     const allocator = testing.allocator;
 
-    const fractions = [_][]const u8{
-        "1/2",  "1/3",  "2/3",  "1/4", "2/4",  "3/4",
-        "1/5",  "2/5",  "3/5",  "4/5", "1/6",  "2/6",
-        "3/6",  "4/6",  "5/6",  "1/12", "2/12", "3/12",
-        "4/12", "5/12", "6/12", "7/12", "8/12", "9/12",
-        "10/12", "11/12", "full"
-    };
+    const fractions = [_][]const u8{ "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5", "1/6", "2/6", "3/6", "4/6", "5/6", "1/12", "2/12", "3/12", "4/12", "5/12", "6/12", "7/12", "8/12", "9/12", "10/12", "11/12", "full" };
 
     for (fractions) |fraction| {
         var generator = CSSGenerator.init(allocator);
@@ -144,10 +133,10 @@ test "max-width values" {
     const allocator = testing.allocator;
 
     const max_widths = [_][]const u8{
-        "0",    "xs",   "sm",   "md",   "lg",   "xl",   "2xl",
-        "3xl",  "4xl",  "5xl",  "6xl",  "7xl",  "full", "min",
-        "max",  "fit",  "prose", "screen-sm", "screen-md", "screen-lg",
-        "screen-xl", "screen-2xl",
+        "0",          "xs",  "sm",    "md",        "lg",        "xl",        "2xl",
+        "3xl",        "4xl", "5xl",   "6xl",       "7xl",       "full",      "min",
+        "max",        "fit", "prose", "screen-sm", "screen-md", "screen-lg", "screen-xl",
+        "screen-2xl",
     };
 
     for (max_widths) |value| {
@@ -177,7 +166,7 @@ test "height with spacing scale values" {
     const allocator = testing.allocator;
 
     const heights = [_][]const u8{
-        "0", "1",  "2", "3",  "4",  "5",  "6",  "7",  "8",
+        "0", "1",  "2",  "3",  "4",  "5",  "6",  "7",  "8",
         "9", "10", "11", "12", "14", "16", "20", "24", "auto",
     };
 
@@ -204,7 +193,7 @@ test "height with fractional values" {
     const allocator = testing.allocator;
 
     const fractions = [_][]const u8{
-        "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5",
+        "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5",  "2/5", "3/5",
         "4/5", "1/6", "2/6", "3/6", "4/6", "5/6", "full",
     };
 

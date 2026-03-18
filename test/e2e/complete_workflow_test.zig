@@ -1,9 +1,9 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const class_parser = headwind.class_parser;
-const CSSGenerator = headwind.CSSGenerator;
+const class_parser = crosswind.class_parser;
+const CSSGenerator = crosswind.CSSGenerator;
 
 // ============================================================================
 // End-to-End Workflow Tests
@@ -36,22 +36,22 @@ test "complete CSS generation workflow" {
         // Dispatch to appropriate generator (simplified for test)
         if (std.mem.startsWith(u8, parsed.utility, "bg-")) {
             const value = parsed.utility[3..];
-            try headwind.backgrounds.generateBgColor(&generator, &parsed, value);
+            try crosswind.backgrounds.generateBgColor(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "text-")) {
             const value = parsed.utility[5..];
-            try headwind.typography.generateTextColor(&generator, &parsed, value);
+            try crosswind.typography.generateTextColor(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "p-")) {
             const value = parsed.utility[2..];
-            try headwind.spacing.generatePadding(&generator, &parsed, value);
+            try crosswind.spacing.generatePadding(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "rounded-")) {
             const value = parsed.utility[8..];
-            try headwind.borders.generateBorderRadius(&generator, &parsed, value);
+            try crosswind.borders.generateBorderRadius(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "shadow-")) {
             const value = parsed.utility[7..];
-            try headwind.shadows.generateShadow(&generator, &parsed, value);
+            try crosswind.shadows.generateShadow(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "ring-")) {
             const value = parsed.utility[5..];
-            try headwind.borders.generateRing(&generator, &parsed, value);
+            try crosswind.borders.generateRing(&generator, &parsed, value);
         }
     }
 
@@ -100,10 +100,10 @@ test "responsive design workflow" {
         // Process responsive utilities
         if (std.mem.startsWith(u8, parsed.utility, "text-")) {
             const value = parsed.utility[5..];
-            try headwind.typography.generateFontSize(&generator, &parsed, value);
+            try crosswind.typography.generateFontSize(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "grid-cols-")) {
             const value = parsed.utility[10..];
-            try headwind.grid.generateGridTemplateColumns(&generator, &parsed, value);
+            try crosswind.grid.generateGridTemplateColumns(&generator, &parsed, value);
         }
     }
 
@@ -114,8 +114,8 @@ test "responsive design workflow" {
 
     // Should contain media queries
     try testing.expect(std.mem.indexOf(u8, css, "@media") != null or
-                      std.mem.indexOf(u8, css, "md:") != null or
-                      std.mem.indexOf(u8, css, "lg:") != null);
+        std.mem.indexOf(u8, css, "md:") != null or
+        std.mem.indexOf(u8, css, "lg:") != null);
 }
 
 test "dark mode workflow" {
@@ -137,10 +137,10 @@ test "dark mode workflow" {
 
         if (std.mem.startsWith(u8, parsed.utility, "bg-")) {
             const value = parsed.utility[3..];
-            try headwind.backgrounds.generateBgColor(&generator, &parsed, value);
+            try crosswind.backgrounds.generateBgColor(&generator, &parsed, value);
         } else if (std.mem.startsWith(u8, parsed.utility, "text-")) {
             const value = parsed.utility[5..];
-            try headwind.typography.generateTextColor(&generator, &parsed, value);
+            try crosswind.typography.generateTextColor(&generator, &parsed, value);
         }
     }
 

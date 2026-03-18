@@ -1,5 +1,5 @@
 /**
- * Comprehensive Benchmark Suite for zig-headwind
+ * Comprehensive Benchmark Suite for zig-crosswind
  *
  * Compares performance against:
  * - Tailwind CSS v3/v4
@@ -15,14 +15,14 @@ import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
 // Configuration
-const HEADWIND_BIN = '../zig-out/bin/headwind';
+const crosswind_BIN = '../zig-out/bin/crosswind';
 const ITERATIONS = 1000;
 const WARMUP = 100;
 
-// Build headwind if needed
-function ensureHeadwindBuilt() {
-  if (!existsSync(HEADWIND_BIN)) {
-    console.log('🔨 Building headwind...');
+// Build crosswind if needed
+function ensurecrosswindBuilt() {
+  if (!existsSync(crosswind_BIN)) {
+    console.log('🔨 Building crosswind...');
     execSync('zig build', { cwd: '..' });
   }
 }
@@ -54,17 +54,17 @@ function generateClasses(count: number): string[] {
 group('Parser Performance', () => {
   bench('Parse 10 classes', () => {
     const input = testSets.small.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 
   bench('Parse 100 classes', () => {
     const input = testSets.medium.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 
   bench('Parse 1000 classes', () => {
     const input = testSets.large.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 });
 
@@ -72,22 +72,22 @@ group('Parser Performance', () => {
 group('Generator Performance', () => {
   bench('Generate CSS for 10 classes', () => {
     const input = testSets.small.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 
   bench('Generate CSS for 100 classes', () => {
     const input = testSets.medium.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 
   bench('Generate CSS for 1000 classes', () => {
     const input = testSets.large.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 
   bench('Generate CSS for 10000 classes', () => {
     const input = testSets.xlarge.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, { encoding: 'utf-8' });
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, { encoding: 'utf-8' });
   });
 });
 
@@ -95,7 +95,7 @@ group('Generator Performance', () => {
 group('Memory Efficiency', () => {
   bench('Memory usage - 1000 classes', () => {
     const input = testSets.large.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, {
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, {
       encoding: 'utf-8',
       maxBuffer: 10 * 1024 * 1024 // 10MB
     });
@@ -103,18 +103,18 @@ group('Memory Efficiency', () => {
 
   bench('Memory usage - 10000 classes', () => {
     const input = testSets.xlarge.join(' ');
-    execSync(`echo "${input}" | ${HEADWIND_BIN} --stdin`, {
+    execSync(`echo "${input}" | ${crosswind_BIN} --stdin`, {
       encoding: 'utf-8',
       maxBuffer: 50 * 1024 * 1024 // 50MB
     });
   });
 });
 
-// Ensure headwind is built
-ensureHeadwindBuilt();
+// Ensure crosswind is built
+ensurecrosswindBuilt();
 
 // Run benchmarks
-console.log('🚀 Running zig-headwind benchmarks...\n');
+console.log('🚀 Running zig-crosswind benchmarks...\n');
 await run({
   units: false,
   silent: false,

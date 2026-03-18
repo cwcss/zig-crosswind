@@ -1,10 +1,10 @@
 const std = @import("std");
 
-/// Headwind configuration schema
+/// crosswind configuration schema
 /// This uses zig-config for loading and merging configuration
-pub const HeadwindConfig = struct {
+pub const crosswindConfig = struct {
     /// Project name
-    name: []const u8 = "headwind",
+    name: []const u8 = "crosswind",
 
     /// Content paths to scan for class names
     content: ContentConfig = .{},
@@ -98,7 +98,7 @@ pub const ThemeConfig = struct {
 
 pub const BuildConfig = struct {
     /// Output file path
-    output: []const u8 = "dist/headwind.css",
+    output: []const u8 = "dist/crosswind.css",
 
     /// Minify output
     minify: bool = false,
@@ -134,7 +134,7 @@ pub const CacheConfig = struct {
     enabled: bool = true,
 
     /// Cache directory
-    dir: []const u8 = ".headwind-cache",
+    dir: []const u8 = ".crosswind-cache",
 
     /// Cache TTL in milliseconds
     ttl: u32 = 3600000, // 1 hour
@@ -142,14 +142,14 @@ pub const CacheConfig = struct {
 
 pub const DarkModeConfig = struct {
     /// Strategy: "class" or "media"
-    strategy: DarkModeStrategy = .@"class",
+    strategy: DarkModeStrategy = .class,
 
     /// Class name for dark mode (when strategy is "class")
     className: []const u8 = "dark",
 };
 
 pub const DarkModeStrategy = enum {
-    @"class",
+    class,
     media,
     selector,
 };
@@ -171,43 +171,34 @@ pub const AttributifyConfig = struct {
     /// List of prefixes to always treat as utilities
     /// e.g., ["flex", "grid", "p", "m", "bg", "text", "border"]
     prefixes: []const []const u8 = &.{
-        "flex", "grid", "inline", "block", "hidden",
-        "p", "px", "py", "pt", "pr", "pb", "pl", "ps", "pe",
-        "m", "mx", "my", "mt", "mr", "mb", "ml", "ms", "me",
-        "w", "h", "min", "max", "size",
-        "bg", "text", "font", "leading", "tracking",
-        "border", "rounded", "ring", "outline",
-        "shadow", "opacity", "blur",
-        "gap", "space",
-        "items", "justify", "content", "self", "place",
-        "top", "right", "bottom", "left", "inset",
-        "z", "order",
-        "overflow", "overscroll",
-        "cursor", "select", "pointer",
-        "transition", "duration", "ease", "delay",
-        "animate", "transform", "scale", "rotate", "translate", "skew",
-        "origin",
-        "col", "row",
-        "aspect", "object",
-        "list", "decoration",
-        "underline", "line", "no",
-        "break", "hyphens", "whitespace", "truncate",
-        "sr", "not",
-        "fill", "stroke",
-        "table", "caption",
-        "filter", "backdrop",
-        "mix", "isolation",
-        "accent", "caret", "scroll",
-        "snap", "touch", "resize", "appearance",
-        "columns", "break",
-        "divide",
+        "flex",       "grid",       "inline",    "block",   "hidden",
+        "p",          "px",         "py",        "pt",      "pr",
+        "pb",         "pl",         "ps",        "pe",      "m",
+        "mx",         "my",         "mt",        "mr",      "mb",
+        "ml",         "ms",         "me",        "w",       "h",
+        "min",        "max",        "size",      "bg",      "text",
+        "font",       "leading",    "tracking",  "border",  "rounded",
+        "ring",       "outline",    "shadow",    "opacity", "blur",
+        "gap",        "space",      "items",     "justify", "content",
+        "self",       "place",      "top",       "right",   "bottom",
+        "left",       "inset",      "z",         "order",   "overflow",
+        "overscroll", "cursor",     "select",    "pointer", "transition",
+        "duration",   "ease",       "delay",     "animate", "transform",
+        "scale",      "rotate",     "translate", "skew",    "origin",
+        "col",        "row",        "aspect",    "object",  "list",
+        "decoration", "underline",  "line",      "no",      "break",
+        "hyphens",    "whitespace", "truncate",  "sr",      "not",
+        "fill",       "stroke",     "table",     "caption", "filter",
+        "backdrop",   "mix",        "isolation", "accent",  "caret",
+        "scroll",     "snap",       "touch",     "resize",  "appearance",
+        "columns",    "break",      "divide",
     },
 
     /// Ignore these attributes (never treat as utilities)
     ignoreAttributes: []const []const u8 = &.{
-        "class", "className", "id", "style", "href", "src", "alt", "title",
-        "type", "name", "value", "placeholder", "data-*", "aria-*",
-        "onclick", "onchange", "onsubmit", "onload", "onerror",
+        "class",    "className", "id",      "style",       "href",   "src",    "alt",     "title",
+        "type",     "name",      "value",   "placeholder", "data-*", "aria-*", "onclick", "onchange",
+        "onsubmit", "onload",    "onerror",
     },
 };
 
@@ -284,12 +275,12 @@ pub const CorePluginsConfig = struct {
 };
 
 /// Default configuration
-pub fn defaultConfig() HeadwindConfig {
+pub fn defaultConfig() crosswindConfig {
     return .{};
 }
 
 /// Validate configuration
-pub fn validate(config: *const HeadwindConfig) !void {
+pub fn validate(config: *const crosswindConfig) !void {
     if (config.content.files.len == 0) {
         return error.ConfigInvalid;
     }
@@ -306,7 +297,7 @@ pub fn validate(config: *const HeadwindConfig) !void {
 
 test "defaultConfig" {
     const config = defaultConfig();
-    try std.testing.expectEqualStrings("headwind", config.name);
+    try std.testing.expectEqualStrings("crosswind", config.name);
     try std.testing.expectEqualStrings(":", config.separator);
 }
 

@@ -1,9 +1,9 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const class_parser = headwind.class_parser;
-const CSSGenerator = headwind.CSSGenerator;
+const class_parser = crosswind.class_parser;
+const CSSGenerator = crosswind.CSSGenerator;
 
 // ============================================================================
 // COMPREHENSIVE EDGE CASE TESTING
@@ -157,7 +157,7 @@ test "edge case: deeply nested brackets" {
     const allocator = testing.allocator;
 
     const nested_brackets = [_][]const u8{
-        "w-[[[100px]]]",  // Triple nested
+        "w-[[[100px]]]", // Triple nested
         "content-['[[[nested]]]']",
         "bg-[url('data:image/svg+xml,...[brackets]...')]",
     };
@@ -213,7 +213,7 @@ test "edge case: complex calc expressions" {
 
     const calc_expressions = [_][]const u8{
         "w-[calc(100%-20px)]",
-        "w-[calc(100vw-calc(100%-20px))]",  // Nested calc
+        "w-[calc(100vw-calc(100%-20px))]", // Nested calc
         "w-[calc((100%-20px)/2)]",
         "w-[min(100%,calc(100vw-40px))]",
         "w-[clamp(200px,50%,calc(100%-100px))]",
@@ -225,8 +225,8 @@ test "edge case: complex calc expressions" {
 
         try testing.expect(parsed.is_arbitrary);
         try testing.expect(std.mem.indexOf(u8, parsed.arbitrary_value.?, "calc") != null or
-                          std.mem.indexOf(u8, parsed.arbitrary_value.?, "min") != null or
-                          std.mem.indexOf(u8, parsed.arbitrary_value.?, "clamp") != null);
+            std.mem.indexOf(u8, parsed.arbitrary_value.?, "min") != null or
+            std.mem.indexOf(u8, parsed.arbitrary_value.?, "clamp") != null);
     }
 }
 
@@ -236,7 +236,7 @@ test "edge case: CSS variables in arbitrary values" {
     const css_vars = [_][]const u8{
         "w-[var(--width)]",
         "bg-[var(--primary-color)]",
-        "text-[var(--text-size,_16px)]",  // With fallback
+        "text-[var(--text-size,_16px)]", // With fallback
     };
 
     for (css_vars) |class| {
@@ -402,7 +402,7 @@ test "edge case: very large numbers" {
 
     const large_numbers = [_][]const u8{
         "w-[999999999px]",
-        "z-[2147483647]",  // Max i32
+        "z-[2147483647]", // Max i32
         "opacity-[0.999999999]",
     };
 
@@ -449,10 +449,10 @@ test "edge case: invalid hex colors" {
     const allocator = testing.allocator;
 
     const invalid_hex = [_][]const u8{
-        "bg-[#gggggg]",  // Invalid hex chars
-        "bg-[#12]",      // Too short
-        "bg-[#12345]",   // Invalid length
-        "bg-[#]",        // Empty
+        "bg-[#gggggg]", // Invalid hex chars
+        "bg-[#12]", // Too short
+        "bg-[#12345]", // Invalid length
+        "bg-[#]", // Empty
     };
 
     for (invalid_hex) |class| {
@@ -468,9 +468,9 @@ test "edge case: rgb with invalid values" {
     const allocator = testing.allocator;
 
     const invalid_rgb = [_][]const u8{
-        "bg-[rgb(999,999,999)]",  // Out of range
-        "bg-[rgb(-10,20,30)]",    // Negative
-        "bg-[rgb(1.5,2.5,3.5)]",  // Decimals
+        "bg-[rgb(999,999,999)]", // Out of range
+        "bg-[rgb(-10,20,30)]", // Negative
+        "bg-[rgb(1.5,2.5,3.5)]", // Decimals
     };
 
     for (invalid_rgb) |class| {
@@ -557,7 +557,7 @@ test "edge case: generate with duplicate classes" {
         var parsed = try class_parser.parseClass(allocator, "bg-blue-500");
         defer parsed.deinit(allocator);
 
-        try headwind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
+        try crosswind.backgrounds.generateBgColor(&generator, &parsed, "blue-500");
     }
 
     const css = try generator.generate();
@@ -587,7 +587,7 @@ test "edge case: conflicting utilities" {
         defer parsed.deinit(allocator);
 
         const value = class[3..]; // Strip "bg-"
-        try headwind.backgrounds.generateBgColor(&generator, &parsed, value);
+        try crosswind.backgrounds.generateBgColor(&generator, &parsed, value);
     }
 
     const css = try generator.generate();

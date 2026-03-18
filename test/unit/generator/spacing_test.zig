@@ -1,10 +1,10 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const spacing = headwind.spacing;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const spacing = crosswind.spacing;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Margin Tests
@@ -14,8 +14,8 @@ test "margin all sides" {
     const allocator = testing.allocator;
 
     const margins = [_][]const u8{
-        "0",  "1",  "2",  "3",  "4",  "5",  "6",  "8",  "10", "12",
-        "14", "16", "20", "24", "28", "32", "36", "40", "44", "48",
+        "0",  "1",  "2",  "3",  "4",  "5",  "6",  "8",    "10", "12",
+        "14", "16", "20", "24", "28", "32", "36", "40",   "44", "48",
         "52", "56", "60", "64", "72", "80", "96", "auto",
     };
 

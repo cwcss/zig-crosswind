@@ -62,8 +62,8 @@ pub const typographyPlugin = @import("plugin/typography.zig").typographyPlugin;
 pub const formsPlugin = @import("plugin/forms.zig").formsPlugin;
 
 // Re-export commonly used types
-pub const HeadwindError = types.HeadwindError;
-pub const HeadwindConfig = config.HeadwindConfig;
+pub const crosswindError = types.crosswindError;
+pub const crosswindConfig = config.crosswindConfig;
 pub const BuildMode = config.BuildMode;
 pub const ClassName = types.ClassName;
 pub const ScanResult = types.ScanResult;
@@ -74,14 +74,14 @@ pub const version_major = 0;
 pub const version_minor = 1;
 pub const version_patch = 0;
 
-/// Initialize Headwind with configuration
-pub const Headwind = struct {
+/// Initialize crosswind with configuration
+pub const crosswind = struct {
     allocator: std.mem.Allocator,
-    config: HeadwindConfig,
+    config: crosswindConfig,
     stats: types.Stats,
     scanner: ?Scanner,
 
-    pub fn init(alloc: std.mem.Allocator, cfg: HeadwindConfig) !Headwind {
+    pub fn init(alloc: std.mem.Allocator, cfg: crosswindConfig) !crosswind {
         return .{
             .allocator = alloc,
             .config = cfg,
@@ -90,14 +90,14 @@ pub const Headwind = struct {
         };
     }
 
-    pub fn deinit(self: *Headwind) void {
+    pub fn deinit(self: *crosswind) void {
         if (self.scanner) |*scanner| {
             scanner.deinit();
         }
     }
 
     /// Build CSS from configuration
-    pub fn build(self: *Headwind) ![]const u8 {
+    pub fn build(self: *crosswind) ![]const u8 {
         var timer = std.time.Timer.start() catch null;
         defer {
             if (timer) |*t| {
@@ -140,7 +140,7 @@ pub const Headwind = struct {
         defer css.deinit();
 
         // Header
-        try css.append("/* Headwind CSS v");
+        try css.append("/* crosswind CSS v");
         try css.append(version);
         try css.append(" - Generated */\n\n");
 
@@ -259,7 +259,7 @@ pub const Headwind = struct {
         const generator_config = CSSGenerator.Config{
             .dark_mode_selector = self.config.darkMode.className,
             .dark_mode_strategy = switch (self.config.darkMode.strategy) {
-                .@"class", .selector => .@"class",
+                .class, .selector => .class,
                 .media => .media,
             },
         };
@@ -313,7 +313,7 @@ pub const Headwind = struct {
     }
 
     /// Get statistics
-    pub fn getStats(self: *const Headwind) types.Stats {
+    pub fn getStats(self: *const crosswind) types.Stats {
         return self.stats;
     }
 };
@@ -337,7 +337,7 @@ pub fn loadConfigResultWithOptions(
 
 /// Load configuration from default locations
 /// DEPRECATED: Use loadConfigResult() instead
-pub fn loadConfig(alloc: std.mem.Allocator) !HeadwindConfig {
+pub fn loadConfig(alloc: std.mem.Allocator) !crosswindConfig {
     return config_loader.loadConfig(alloc, .{});
 }
 
@@ -346,7 +346,7 @@ pub fn loadConfig(alloc: std.mem.Allocator) !HeadwindConfig {
 pub fn loadConfigWithOptions(
     alloc: std.mem.Allocator,
     options: config_loader.LoadOptions,
-) !HeadwindConfig {
+) !crosswindConfig {
     return config_loader.loadConfig(alloc, options);
 }
 
@@ -354,18 +354,18 @@ test "version" {
     try std.testing.expectEqualStrings("0.1.0", version);
 }
 
-test "Headwind init" {
+test "crosswind init" {
     const cfg = config.defaultConfig();
-    var hw = try Headwind.init(std.testing.allocator, cfg);
+    var hw = try crosswind.init(std.testing.allocator, cfg);
     defer hw.deinit();
 
     const stats = hw.getStats();
     try std.testing.expectEqual(@as(usize, 0), stats.files_scanned);
 }
 
-test "Headwind build" {
+test "crosswind build" {
     const cfg = config.defaultConfig();
-    var hw = try Headwind.init(std.testing.allocator, cfg);
+    var hw = try crosswind.init(std.testing.allocator, cfg);
     defer hw.deinit();
 
     const css = try hw.build();

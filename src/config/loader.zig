@@ -2,19 +2,19 @@ const std = @import("std");
 const zig_config = @import("zig-config");
 const schema = @import("schema.zig");
 
-pub const ConfigResult = zig_config.ConfigResult(schema.HeadwindConfig);
+pub const ConfigResult = zig_config.ConfigResult(schema.crosswindConfig);
 
-/// Load Headwind configuration using zig-config
+/// Load crosswind configuration using zig-config
 /// Returns the full ConfigResult which must be deinitialized by the caller
 pub fn loadConfigResult(allocator: std.mem.Allocator, options: LoadOptions) !ConfigResult {
     // Use zig-config to load configuration
     var config_result = try zig_config.loadConfig(
-        schema.HeadwindConfig,
+        schema.crosswindConfig,
         allocator,
         .{
-            .name = options.name orelse "headwind",
+            .name = options.name orelse "crosswind",
             .cwd = options.cwd,
-            .env_prefix = "HEADWIND",
+            .env_prefix = "crosswind",
         },
     );
     errdefer config_result.deinit(allocator);
@@ -25,12 +25,12 @@ pub fn loadConfigResult(allocator: std.mem.Allocator, options: LoadOptions) !Con
     return config_result;
 }
 
-/// Load Headwind configuration using zig-config
+/// Load crosswind configuration using zig-config
 /// Note: The returned config owns its memory. Strings and arrays in the config
 /// must be freed by the caller using the same allocator.
 /// DEPRECATED: Use loadConfigResult() instead and call deinit() on the result
 /// WARNING: This function leaks memory - the ConfigResult is not properly cleaned up
-pub fn loadConfig(allocator: std.mem.Allocator, options: LoadOptions) !schema.HeadwindConfig {
+pub fn loadConfig(allocator: std.mem.Allocator, options: LoadOptions) !schema.crosswindConfig {
     const config_result = try loadConfigResult(allocator, options);
     // WARNING: This leaks memory! The config_result should be deinitialized
     // but we can't do it here because we're returning the value.
@@ -39,7 +39,7 @@ pub fn loadConfig(allocator: std.mem.Allocator, options: LoadOptions) !schema.He
 }
 
 pub const LoadOptions = struct {
-    /// Config name (default: "headwind")
+    /// Config name (default: "crosswind")
     name: ?[]const u8 = null,
 
     /// Working directory to search for config
@@ -52,10 +52,10 @@ pub fn findConfigFile(allocator: std.mem.Allocator, cwd: ?[]const u8) !?[]const 
     defer if (cwd == null) allocator.free(search_dir);
 
     const config_names = [_][]const u8{
-        "headwind.config.json",
-        "headwind.config.zig",
-        ".headwindrc.json",
-        ".headwindrc",
+        "crosswind.config.json",
+        "crosswind.config.zig",
+        ".crosswindrc.json",
+        ".crosswindrc",
     };
 
     for (config_names) |name| {

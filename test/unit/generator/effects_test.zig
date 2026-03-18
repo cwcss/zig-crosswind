@@ -1,11 +1,11 @@
 const std = @import("std");
 const testing = std.testing;
-const headwind = @import("headwind");
+const crosswind = @import("crosswind");
 
-const shadows = headwind.shadows;
-const blend = headwind.blend;
-const CSSGenerator = headwind.CSSGenerator;
-const class_parser = headwind.class_parser;
+const shadows = crosswind.shadows;
+const blend = crosswind.blend;
+const CSSGenerator = crosswind.CSSGenerator;
+const class_parser = crosswind.class_parser;
 
 // ============================================================================
 // Shadow Tests
@@ -77,8 +77,8 @@ test "opacity values" {
     const allocator = testing.allocator;
 
     const opacities = [_][]const u8{
-        "0",   "5",   "10",  "20",  "25",  "30",  "40",  "50",
-        "60",  "70",  "75",  "80",  "90",  "95",  "100",
+        "0",  "5",  "10", "20", "25", "30", "40",  "50",
+        "60", "70", "75", "80", "90", "95", "100",
     };
 
     for (opacities) |opacity| {
@@ -108,10 +108,10 @@ test "mix blend mode values" {
     const allocator = testing.allocator;
 
     const blend_modes = [_][]const u8{
-        "normal",      "multiply",   "screen",     "overlay",    "darken",
-        "lighten",     "color-dodge", "color-burn", "hard-light", "soft-light",
-        "difference",  "exclusion",  "hue",        "saturation", "color",
-        "luminosity",  "plus-lighter",
+        "normal",     "multiply",     "screen",     "overlay",    "darken",
+        "lighten",    "color-dodge",  "color-burn", "hard-light", "soft-light",
+        "difference", "exclusion",    "hue",        "saturation", "color",
+        "luminosity", "plus-lighter",
     };
 
     for (blend_modes) |mode| {
@@ -141,9 +141,9 @@ test "background blend mode values" {
     const allocator = testing.allocator;
 
     const blend_modes = [_][]const u8{
-        "normal",   "multiply", "screen",   "overlay",  "darken",
-        "lighten",  "color-dodge", "color-burn", "hard-light", "soft-light",
-        "difference", "exclusion", "hue",      "saturation", "color",
+        "normal",     "multiply",    "screen",     "overlay",    "darken",
+        "lighten",    "color-dodge", "color-burn", "hard-light", "soft-light",
+        "difference", "exclusion",   "hue",        "saturation", "color",
         "luminosity",
     };
 

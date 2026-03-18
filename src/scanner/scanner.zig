@@ -23,7 +23,7 @@ pub const Scanner = struct {
             "build/**",
         },
         cache_enabled: bool = true,
-        cache_dir: []const u8 = ".headwind-cache",
+        cache_dir: []const u8 = ".crosswind-cache",
         /// Attributify mode configuration
         attributify: config_schema.AttributifyConfig = .{},
         /// Grouped syntax configuration
