@@ -1,5 +1,5 @@
 const std = @import("std");
-const zig_config = @import("zig-config");
+const zig_config = @import("zig_config");
 const schema = @import("schema.zig");
 
 pub const ConfigResult = zig_config.ConfigResult(schema.crosswindConfig);

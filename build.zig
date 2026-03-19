@@ -6,7 +6,7 @@ pub fn build(b: *std.Build) void {
 
     // Dependencies - manually add zig-config from local path
     const zig_config_path = "../zig-config/src/zig-config.zig";
-    const zig_config_mod = b.addModule("zig-config", .{
+    const zig_config_mod = b.addModule("zig_config", .{
         .root_source_file = b.path(zig_config_path),
         .target = target,
         .optimize = optimize,
@@ -18,7 +18,7 @@ pub fn build(b: *std.Build) void {
     });
 
     // Add zig-config as a dependency
-    crosswind_lib.addImport("zig-config", zig_config_mod);
+    crosswind_lib.addImport("zig_config", zig_config_mod);
 
     // Executable (CLI)
     const exe = b.addExecutable(.{
@@ -31,7 +31,7 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.root_module.addImport("crosswind", crosswind_lib);
-    exe.root_module.addImport("zig-config", zig_config_mod);
+    exe.root_module.addImport("zig_config", zig_config_mod);
 
     b.installArtifact(exe);
 
@@ -55,7 +55,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    lib_tests.root_module.addImport("zig-config", zig_config_mod);
+    lib_tests.root_module.addImport("zig_config", zig_config_mod);
 
     const run_lib_tests = b.addRunArtifact(lib_tests);
 
@@ -68,7 +68,7 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    comprehensive_tests.root_module.addImport("zig-config", zig_config_mod);
+    comprehensive_tests.root_module.addImport("zig_config", zig_config_mod);
     comprehensive_tests.root_module.addImport("crosswind", crosswind_lib);
 
     const run_comprehensive_tests = b.addRunArtifact(comprehensive_tests);
@@ -132,7 +132,7 @@ pub fn build(b: *std.Build) void {
         });
 
         cross_exe.root_module.addImport("crosswind", crosswind_lib);
-        cross_exe.root_module.addImport("zig-config", zig_config_mod);
+        cross_exe.root_module.addImport("zig_config", zig_config_mod);
 
         // Static linking only for Linux and Windows (macOS doesn't support static libc)
         if (cross_target.query.os_tag == .linux or cross_target.query.os_tag == .windows) {
@@ -168,7 +168,7 @@ pub fn build(b: *std.Build) void {
         });
 
         cross_exe.root_module.addImport("crosswind", crosswind_lib);
-        cross_exe.root_module.addImport("zig-config", zig_config_mod);
+        cross_exe.root_module.addImport("zig_config", zig_config_mod);
 
         // Static linking only for Linux and Windows
         if (cross_target.query.os_tag == .linux or cross_target.query.os_tag == .windows) {
@@ -204,7 +204,7 @@ pub fn build(b: *std.Build) void {
     });
 
     release_exe.root_module.addImport("crosswind", crosswind_lib);
-    release_exe.root_module.addImport("zig-config", zig_config_mod);
+    release_exe.root_module.addImport("zig_config", zig_config_mod);
     release_exe.root_module.strip = true;
 
     const install_release = b.addInstallArtifact(release_exe, .{});
@@ -222,7 +222,7 @@ pub fn build(b: *std.Build) void {
     });
 
     release_small_exe.root_module.addImport("crosswind", crosswind_lib);
-    release_small_exe.root_module.addImport("zig-config", zig_config_mod);
+    release_small_exe.root_module.addImport("zig_config", zig_config_mod);
     release_small_exe.root_module.strip = true;
 
     const install_release_small = b.addInstallArtifact(release_small_exe, .{});
